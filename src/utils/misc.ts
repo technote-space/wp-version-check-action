@@ -63,5 +63,5 @@ export const findAutoloadFile = (workDir: string): string | never => {
 		throw new Error('Autoload file not found.');
 	}
 
-	return result;
+	return result.replace(getPrefixRegExp(workDir), '').replace(/^\//, '');
 };

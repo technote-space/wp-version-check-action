@@ -304,11 +304,11 @@ describe('getTagName', () => {
 
 describe('findAutoloadFile', () => {
 	it('should return autoload file 1', () => {
-		expect(findAutoloadFile(path.join(fixtureRootDir, 'plugin1'))).toBe(path.join(fixtureRootDir, 'plugin1', 'autoload.php'));
+		expect(findAutoloadFile(path.join(fixtureRootDir, 'plugin1'))).toBe('autoload.php');
 	});
 
 	it('should return autoload file 2', () => {
-		expect(findAutoloadFile(path.join(fixtureRootDir, 'plugin2'))).toBe(path.join(fixtureRootDir, 'plugin2', 'plugin2.php'));
+		expect(findAutoloadFile(path.join(fixtureRootDir, 'plugin2'))).toBe('plugin2.php');
 	});
 
 	it('should throw error', () => {
