@@ -1,0 +1,19 @@
+{
+  "name": "Test",
+  "slug": "test",
+  "download_url": "https://test/release.zip",
+  "version": "1.2.3",
+  "tested": "5.3",
+  "homepage": "https://test",
+  "author": "Test",
+  "author_homepage": "https://test",
+  "sections": {
+    "description": "Test"
+  },
+  "banners": {
+    "low": "https://test/banner-772x250.png"
+  },
+  "icons": {
+    "1x": "https://test/icon-128x128.png"
+  }
+}
