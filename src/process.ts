@@ -1,13 +1,6 @@
 import { Context } from '@actions/github/lib/context';
 import { Octokit } from '@octokit/rest';
-import { Logger, Command } from '@technote-space/github-action-helper';
-import { getPayload } from './utils/misc';
+import { Logger, Utils } from '@technote-space/github-action-helper';
+import { updatePackageVersion, commit } from './utils/package';
 
-export const execute = async(logger: Logger, octokit: Octokit, context: Context): Promise<void> => {
-	console.log(getPayload(context));
-
-	const command = new Command(logger);
-	await command.execAsync({
-		command: 'ls -lat',
-	});
-};
+export const execute = async(logger: Logger, octokit: Octokit, context: Context): Promise<boolean> => commit(await updatePackageVersion(logger, context), logger, Utils.getOctokit(), context);

@@ -7,7 +7,7 @@
 
 *Read this in other languages: [English](README.md), [日本語](README.ja.md).*
 
-This is a `GitHub Actions` to check versions of wp plugin files before publish.
+公開前にプラグインのバージョンをチェックする`GitHub Actions`です。
 
 ## Table of Contents
 
@@ -16,25 +16,25 @@ This is a `GitHub Actions` to check versions of wp plugin files before publish.
 <details>
 <summary>Details</summary>
 
-- [Usage](#usage)
-  - [Used when push](#used-when-push)
-  - [Used in the release process](#used-in-the-release-process)
-- [Options](#options)
+- [使用方法](#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95)
+  - [プッシュ時に使用](#%E3%83%97%E3%83%83%E3%82%B7%E3%83%A5%E6%99%82%E3%81%AB%E4%BD%BF%E7%94%A8)
+  - [リリースプロセスで使用](#%E3%83%AA%E3%83%AA%E3%83%BC%E3%82%B9%E3%83%97%E3%83%AD%E3%82%BB%E3%82%B9%E3%81%A7%E4%BD%BF%E7%94%A8)
+- [オプション](#%E3%82%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3)
   - [BRANCH_PREFIX](#branch_prefix)
   - [COMMIT_DISABLED](#commit_disabled)
   - [COMMIT_MESSAGE](#commit_message)
   - [TEST_TAG_PREFIX](#test_tag_prefix)
-- [Action event details](#action-event-details)
-  - [Target events](#target-events)
+- [Action イベント詳細](#action-%E3%82%A4%E3%83%99%E3%83%B3%E3%83%88%E8%A9%B3%E7%B4%B0)
+  - [対象イベント](#%E5%AF%BE%E8%B1%A1%E3%82%A4%E3%83%99%E3%83%B3%E3%83%88)
   - [Conditions](#conditions)
 - [Author](#author)
 
 </details>
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-## Usage
-### Used when push
-   e.g. `.github/workflows/check_version.yml`
+## 使用方法
+### プッシュ時に使用
+   例：`.github/workflows/check_version.yml`
    ```yaml
    on: push
    name: Check version
@@ -53,8 +53,8 @@ This is a `GitHub Actions` to check versions of wp plugin files before publish.
              BRANCH_PREFIX: release/
    ```
 
-### Used in the release process
-   e.g. `.github/workflows/release.yml`
+### リリースプロセスで使用
+   例：`.github/workflows/release.yml`
    ```yaml
    on:
     push:
@@ -87,29 +87,29 @@ This is a `GitHub Actions` to check versions of wp plugin files before publish.
            with:
              args: publish
    ```
-[More details of target event](#action-event-details)
+[対象イベントの詳細](#action-%E3%82%A4%E3%83%99%E3%83%B3%E3%83%88%E8%A9%B3%E7%B4%B0)
 
-## Options
+## オプション
 ### BRANCH_PREFIX
-Branch name prefix.  
+ブランチプリフィックス  
 default: `''`  
-e.g. `release/`
+例：`release/`
 
 ### COMMIT_DISABLED
-Whether commit is disabled.  
+コミットが無効かどうか  
 default: `''`
 
 ### COMMIT_MESSAGE
-Commit message of update version commit.  
+パッケージバージョン更新用コミットのメッセージ  
 default: `'feat: update version'`
 
 ### TEST_TAG_PREFIX
-Prefix for test tag.  
+テスト用タグのプリフィックス  
 default: `''`  
-e.g. `'test/'`
+例：`'test/'`
 
-## Action event details
-### Target events
+## Action イベント詳細
+### 対象イベント
 | eventName: action | condition |
 |:---:|:---:|
 |push: *|[condition1](#condition1)|
@@ -120,19 +120,19 @@ e.g. `'test/'`
 ### Conditions
 #### condition1
 - tags
-  - semantic versioning tag (e.g. `v1.2.3`)
+  - semantic versioning tag (例：`v1.2.3`)
 - branches
   - `${BRANCH_PREFIX}${tag}`
-    - tag: semantic versioning tag (e.g. `v1.2.3`)
-    - e.g. branch: `release/v1.2.3`
+    - tag: semantic versioning tag (例：`v1.2.3`)
+    - 例：branch: `release/v1.2.3`
 #### condition2
 - branches
   - `${BRANCH_PREFIX}${tag}`
-    - tag: semantic versioning tag (e.g. `v1.2.3`)
-    - e.g. branch: `release/v1.2.3`
+    - tag: semantic versioning tag (例：`v1.2.3`)
+    - 例：branch: `release/v1.2.3`
 #### condition3
 - tags
-  - semantic versioning tag (e.g. `v1.2.3`)
+  - semantic versioning tag (例：`v1.2.3`)
 
 ## Author
 [GitHub (Technote)](https://github.com/technote-space)  
