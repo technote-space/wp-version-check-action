@@ -16,9 +16,17 @@ This is a `GitHub Actions` to check versions of wp plugin files before publish.
 <details>
 <summary>Details</summary>
 
-- [Setup](#setup)
-  - [yarn](#yarn)
-  - [npm](#npm)
+- [Usage](#usage)
+  - [Used when push](#used-when-push)
+  - [Used in the release process](#used-in-the-release-process)
+- [Options](#options)
+  - [BRANCH_PREFIX](#branch_prefix)
+  - [COMMIT_DISABLED](#commit_disabled)
+  - [COMMIT_MESSAGE](#commit_message)
+  - [TEST_TAG_PREFIX](#test_tag_prefix)
+- [Action event details](#action-event-details)
+  - [Target events](#target-events)
+  - [Conditions](#conditions)
 - [Author](#author)
 
 </details>
