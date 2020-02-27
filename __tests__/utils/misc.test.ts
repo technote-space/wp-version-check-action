@@ -279,7 +279,7 @@ describe('getCommitMessage', () => {
 	});
 
 	it('should get default commit message', () => {
-		expect(getCommitMessage()).toBe('feat: update version');
+		expect(getCommitMessage()).toBe('chore: update wp version');
 	});
 });
 
