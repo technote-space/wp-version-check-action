@@ -19,7 +19,7 @@ inputs:
     required: false
   COMMIT_MESSAGE:
     description: Commit message of update package version commit.
-    default: 'feat: update version'
+    default: 'chore: update wp version'
     required: true
   TEST_TAG_PREFIX:
     description: Tag name prefix for test
