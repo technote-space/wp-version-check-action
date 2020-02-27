@@ -101,7 +101,7 @@ default: `''`
 
 ### COMMIT_MESSAGE
 Commit message of update version commit.  
-default: `'feat: update version'`
+default: `'chore: update wp version'`
 
 ### TEST_TAG_PREFIX
 Prefix for test tag.  
