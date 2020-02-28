@@ -1,4 +1,5 @@
 import { existsSync } from 'fs';
+import { setOutput } from '@actions/core';
 import { Context } from '@actions/github/lib/context';
 import { Octokit } from '@octokit/rest';
 import { Utils, ApiHelper, Logger, ContextHelper } from '@technote-space/github-action-helper';
@@ -73,5 +74,7 @@ export const commit = async(files: Array<string>, logger: Logger, octokit: Octok
 	}
 
 	const helper = new ApiHelper(octokit, context, logger, {branch: branch, refForUpdate: `heads/${branch}`, suppressBPError: true});
-	return await helper.commit(Utils.getWorkspace(), getCommitMessage(), files);
+	await helper.commit(Utils.getWorkspace(), getCommitMessage(), files);
+	setOutput('sha', process.env.GITHUB_SHA + '');
+	return true;
 };
