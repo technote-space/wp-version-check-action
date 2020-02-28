@@ -24,6 +24,7 @@ This is a `GitHub Actions` to check versions of wp plugin files before publish.
   - [COMMIT_DISABLED](#commit_disabled)
   - [COMMIT_MESSAGE](#commit_message)
   - [TEST_TAG_PREFIX](#test_tag_prefix)
+  - [NEXT_VERSION](#next_version)
 - [Action event details](#action-event-details)
   - [Target events](#target-events)
   - [Conditions](#conditions)
