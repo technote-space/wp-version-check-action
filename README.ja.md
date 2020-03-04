@@ -20,11 +20,6 @@
   - [プッシュ時に使用](#%E3%83%97%E3%83%83%E3%82%B7%E3%83%A5%E6%99%82%E3%81%AB%E4%BD%BF%E7%94%A8)
   - [リリースプロセスで使用](#%E3%83%AA%E3%83%AA%E3%83%BC%E3%82%B9%E3%83%97%E3%83%AD%E3%82%BB%E3%82%B9%E3%81%A7%E4%BD%BF%E7%94%A8)
 - [オプション](#%E3%82%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3)
-  - [BRANCH_PREFIX](#branch_prefix)
-  - [COMMIT_DISABLED](#commit_disabled)
-  - [COMMIT_MESSAGE](#commit_message)
-  - [TEST_TAG_PREFIX](#test_tag_prefix)
-  - [NEXT_VERSION](#next_version)
 - [Action イベント詳細](#action-%E3%82%A4%E3%83%99%E3%83%B3%E3%83%88%E8%A9%B3%E7%B4%B0)
   - [対象イベント](#%E5%AF%BE%E8%B1%A1%E3%82%A4%E3%83%99%E3%83%B3%E3%83%88)
   - [Conditions](#conditions)
@@ -50,7 +45,6 @@
          - name: Check version
            uses: technote-space/wp-version-check-action@v1
            with:
-             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
              BRANCH_PREFIX: release/
    ```
 
@@ -74,7 +68,6 @@
          - name: Check version
            uses: technote-space/wp-version-check-action@v1
            with:
-             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
              COMMIT_DISABLED: 1
 
          - name: Install Package dependencies
@@ -90,29 +83,23 @@
    ```
 [対象イベントの詳細](#action-%E3%82%A4%E3%83%99%E3%83%B3%E3%83%88%E8%A9%B3%E7%B4%B0)
 
+## 対象ファイル
+- readme.txt
+  - `Stable tag:`
+- update.json
+  - `"version"`
+- autoload file (`Version` 情報を含むPHPファイル)
+  - `Version:`
+
 ## オプション
-### BRANCH_PREFIX
-ブランチプリフィックス  
-default: `''`  
-例：`release/`
-
-### COMMIT_DISABLED
-コミットが無効かどうか  
-default: `''`
-
-### COMMIT_MESSAGE
-パッケージバージョン更新用コミットのメッセージ  
-default: `'feat: update version'`
-
-### TEST_TAG_PREFIX
-テスト用タグのプリフィックス  
-default: `''`  
-例：`'test/'`
-
-### NEXT_VERSION
-次のバージョンを指定  
-default: `''`  
-e.g. `'v1.2.3'`
+| name | description | default | required | e.g. |
+|:---:|:---|:---:|:---:|:---:|
+|BRANCH_PREFIX|ブランチプリフィックス| | |`release/`|
+|COMMIT_DISABLED|コミットが無効かどうか| | |`true`|
+|COMMIT_MESSAGE|パッケージバージョン更新用コミットのメッセージ|`feat: update version`|true| |
+|TEST_TAG_PREFIX|テスト用タグのプリフィックス| | |`test/`|
+|NEXT_VERSION|次のバージョンを指定| | |`v1.2.3`|
+|GITHUB_TOKEN|Access token|`${{github.token}}`|true|`${{secrets.ACCESS_TOKEN}}`|
 
 ## Action イベント詳細
 ### 対象イベント
