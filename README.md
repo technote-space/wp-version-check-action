@@ -83,6 +83,14 @@ This is a `GitHub Actions` to check versions of wp plugin files before publish.
    ```
 [More details of target event](#action-event-details)
 
+## Target files
+- readme.txt
+  - `Stable tag:`
+- update.json
+  - `"version"`
+- autoload file (PHP file which contains `Version` info)
+  - `Version:`
+
 ## Options
 | name | description | default | required | e.g. |
 |:---:|:---|:---:|:---:|:---:|
