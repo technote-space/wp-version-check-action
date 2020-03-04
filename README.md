@@ -19,6 +19,7 @@ This is a `GitHub Actions` to check versions of wp plugin files before publish.
 - [Usage](#usage)
   - [Used when push](#used-when-push)
   - [Used in the release process](#used-in-the-release-process)
+- [Target files](#target-files)
 - [Options](#options)
 - [Action event details](#action-event-details)
   - [Target events](#target-events)
