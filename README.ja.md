@@ -91,28 +91,14 @@
 [対象イベントの詳細](#action-%E3%82%A4%E3%83%99%E3%83%B3%E3%83%88%E8%A9%B3%E7%B4%B0)
 
 ## オプション
-### BRANCH_PREFIX
-ブランチプリフィックス  
-default: `''`  
-例：`release/`
-
-### COMMIT_DISABLED
-コミットが無効かどうか  
-default: `''`
-
-### COMMIT_MESSAGE
-パッケージバージョン更新用コミットのメッセージ  
-default: `'feat: update version'`
-
-### TEST_TAG_PREFIX
-テスト用タグのプリフィックス  
-default: `''`  
-例：`'test/'`
-
-### NEXT_VERSION
-次のバージョンを指定  
-default: `''`  
-e.g. `'v1.2.3'`
+| name | description | default | required | e.g. |
+|:---:|:---|:---:|:---:|:---:|
+|BRANCH_PREFIX|ブランチプリフィックス| | |`release/`|
+|COMMIT_DISABLED|コミットが無効かどうか| | |`true`|
+|COMMIT_MESSAGE|パッケージバージョン更新用コミットのメッセージ|`feat: update version`|true| |
+|TEST_TAG_PREFIX|テスト用タグのプリフィックス| | |`test/`|
+|NEXT_VERSION|次のバージョンを指定| | |`v1.2.3`|
+|GITHUB_TOKEN|Access token|`${{github.token}}`|true|`${{secrets.ACCESS_TOKEN}}`|
 
 ## Action イベント詳細
 ### 対象イベント

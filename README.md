@@ -91,28 +91,14 @@ This is a `GitHub Actions` to check versions of wp plugin files before publish.
 [More details of target event](#action-event-details)
 
 ## Options
-### BRANCH_PREFIX
-Branch name prefix.  
-default: `''`  
-e.g. `release/`
-
-### COMMIT_DISABLED
-Whether commit is disabled.  
-default: `''`
-
-### COMMIT_MESSAGE
-Commit message of update version commit.  
-default: `'chore: update wp version'`
-
-### TEST_TAG_PREFIX
-Prefix for test tag.  
-default: `''`  
-e.g. `'test/'`
-
-### NEXT_VERSION
-Specify next version.  
-default: `''`  
-e.g. `'v1.2.3'`
+| name | description | default | required | e.g. |
+|:---:|:---|:---:|:---:|:---:|
+|BRANCH_PREFIX|Branch name prefix| | |`release/`|
+|COMMIT_DISABLED|Whether commit is disabled| | |`true`|
+|COMMIT_MESSAGE|Commit message of update version commit|`feat: update version`|true| |
+|TEST_TAG_PREFIX|Prefix for test tag| | |`test/`|
+|NEXT_VERSION|Specify next version| | |`v1.2.3`|
+|GITHUB_TOKEN|Access token|`${{github.token}}`|true|`${{secrets.ACCESS_TOKEN}}`|
 
 ## Action event details
 ### Target events
