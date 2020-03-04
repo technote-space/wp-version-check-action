@@ -19,12 +19,8 @@ This is a `GitHub Actions` to check versions of wp plugin files before publish.
 - [Usage](#usage)
   - [Used when push](#used-when-push)
   - [Used in the release process](#used-in-the-release-process)
+- [Target files](#target-files)
 - [Options](#options)
-  - [BRANCH_PREFIX](#branch_prefix)
-  - [COMMIT_DISABLED](#commit_disabled)
-  - [COMMIT_MESSAGE](#commit_message)
-  - [TEST_TAG_PREFIX](#test_tag_prefix)
-  - [NEXT_VERSION](#next_version)
 - [Action event details](#action-event-details)
   - [Target events](#target-events)
   - [Conditions](#conditions)
@@ -50,7 +46,6 @@ This is a `GitHub Actions` to check versions of wp plugin files before publish.
          - name: Check version
            uses: technote-space/wp-version-check-action@v1
            with:
-             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
              BRANCH_PREFIX: release/
    ```
 
@@ -74,7 +69,6 @@ This is a `GitHub Actions` to check versions of wp plugin files before publish.
          - name: Check version
            uses: technote-space/wp-version-check-action@v1
            with:
-             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
              COMMIT_DISABLED: 1
 
          - name: Install Package dependencies
@@ -90,29 +84,23 @@ This is a `GitHub Actions` to check versions of wp plugin files before publish.
    ```
 [More details of target event](#action-event-details)
 
+## Target files
+- readme.txt
+  - `Stable tag:`
+- update.json
+  - `"version"`
+- autoload file (PHP file which contains `Version` info)
+  - `Version:`
+
 ## Options
-### BRANCH_PREFIX
-Branch name prefix.  
-default: `''`  
-e.g. `release/`
-
-### COMMIT_DISABLED
-Whether commit is disabled.  
-default: `''`
-
-### COMMIT_MESSAGE
-Commit message of update version commit.  
-default: `'chore: update wp version'`
-
-### TEST_TAG_PREFIX
-Prefix for test tag.  
-default: `''`  
-e.g. `'test/'`
-
-### NEXT_VERSION
-Specify next version.  
-default: `''`  
-e.g. `'v1.2.3'`
+| name | description | default | required | e.g. |
+|:---:|:---|:---:|:---:|:---:|
+|BRANCH_PREFIX|Branch name prefix| | |`release/`|
+|COMMIT_DISABLED|Whether commit is disabled| | |`true`|
+|COMMIT_MESSAGE|Commit message of update version commit|`feat: update version`|true| |
+|TEST_TAG_PREFIX|Prefix for test tag| | |`test/`|
+|NEXT_VERSION|Specify next version| | |`v1.2.3`|
+|GITHUB_TOKEN|Access token|`${{github.token}}`|true|`${{secrets.ACCESS_TOKEN}}`|
 
 ## Action event details
 ### Target events
