@@ -50,7 +50,6 @@ This is a `GitHub Actions` to check versions of wp plugin files before publish.
          - name: Check version
            uses: technote-space/wp-version-check-action@v1
            with:
-             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
              BRANCH_PREFIX: release/
    ```
 
@@ -74,7 +73,6 @@ This is a `GitHub Actions` to check versions of wp plugin files before publish.
          - name: Check version
            uses: technote-space/wp-version-check-action@v1
            with:
-             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
              COMMIT_DISABLED: 1
 
          - name: Install Package dependencies
