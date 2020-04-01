@@ -69,6 +69,14 @@ describe('isTargetEvent', () => {
 	});
 
 	it('should return true 6', () => {
+		process.env.INPUT_NEXT_VERSION = 'v1.2.3';
+		expect(isTargetEvent(TARGET_EVENTS, generateContext({
+			event: 'push',
+			ref: 'refs/master',
+		}))).toBe(true);
+	});
+
+	it('should return true 7', () => {
 		process.env.INPUT_BRANCH_PREFIX = 'release/';
 		expect(isTargetEvent(TARGET_EVENTS, generateContext({
 			event: 'pull_request',
@@ -85,11 +93,37 @@ describe('isTargetEvent', () => {
 		}))).toBe(true);
 	});
 
-	it('should return true 7', () => {
-		process.env.INPUT_NEXT_VERSION = 'v1.2.3';
+	it('should return true 8', () => {
+		process.env.INPUT_BRANCH_PREFIX = 'release/';
 		expect(isTargetEvent(TARGET_EVENTS, generateContext({
-			event: 'push',
-			ref: 'refs/master',
+			event: 'pull_request',
+			action: 'reopened',
+			ref: 'refs/pull/123/merge',
+		}, {
+			payload: {
+				'pull_request': {
+					head: {
+						ref: 'release/v1.2.3',
+					},
+				},
+			},
+		}))).toBe(true);
+	});
+
+	it('should return true 9', () => {
+		process.env.INPUT_BRANCH_PREFIX = 'release/';
+		expect(isTargetEvent(TARGET_EVENTS, generateContext({
+			event: 'pull_request',
+			action: 'synchronize',
+			ref: 'refs/pull/123/merge',
+		}, {
+			payload: {
+				'pull_request': {
+					head: {
+						ref: 'release/v1.2.3',
+					},
+				},
+			},
 		}))).toBe(true);
 	});
 
