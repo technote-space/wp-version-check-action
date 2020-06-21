@@ -50,4 +50,9 @@ export const REPLACE_RULES: Array<(version: string, autoload: string) => { file:
     from: /Version\s*:\s*v?\d+(\.\d+)*$/m,
     to: `Version: ${version}`,
   }),
+  (version: string): { file: string; from: RegExp; to: string } => ({
+    file: 'assets/js/package.json',
+    from: /"version"\s*:\s*"v?\d+(\.\d+)*"\s*(,?)$/m,
+    to: `"version": "${version}"$2`,
+  }),
 ];

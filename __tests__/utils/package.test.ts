@@ -56,7 +56,7 @@ describe('updatePackageVersion', () => {
     expect(await updatePackageVersion(logger, getContext({
       eventName: 'push',
       ref: 'refs/tags/v0.0.2',
-    }))).toEqual(['test1', 'test1', 'test1']);
+    }))).toEqual(['test1', 'test1', 'test1', 'test1']);
   });
 });
 
