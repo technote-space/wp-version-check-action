@@ -3,7 +3,7 @@ import {setOutput} from '@actions/core';
 import {Context} from '@actions/github/lib/context';
 import {Octokit} from '@octokit/rest';
 import {Utils, ApiHelper, Logger, ContextHelper} from '@technote-space/github-action-helper';
-import replace, {ReplaceResult} from 'replace-in-file';
+import {ReplaceResult, replaceInFile} from 'replace-in-file';
 import {
   getPackageVersionToUpdate,
   getReplaceResultMessages,
@@ -29,7 +29,7 @@ export const updatePackageVersion = async(logger: Logger, context: Context): Pro
     if (!existsSync(config.file)) {
       return acc;
     }
-    return acc.concat(await replace({...config, files: config.file}));
+    return acc.concat(await replaceInFile({...config, files: config.file}));
   }, Promise.resolve([] as Array<ReplaceResult>));
 
   logger.displayStdout(getReplaceResultMessages(results));

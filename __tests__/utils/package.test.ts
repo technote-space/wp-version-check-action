@@ -1,7 +1,7 @@
 /* eslint-disable no-magic-numbers */
 import nock from 'nock';
 import path from 'path';
-import * as replace from 'replace-in-file';
+import {ReplaceResult} from 'replace-in-file';
 import {Logger} from '@technote-space/github-action-helper';
 import {
   getContext,
@@ -14,17 +14,18 @@ import {
   testFs,
   getOctokit,
 } from '@technote-space/github-action-test-helper';
-import {ReplaceResult} from 'replace-in-file';
 import {
   updatePackageVersion,
   getUpdateBranch,
   commit,
 } from '../../src/utils/package';
 
-jest.mock('replace-in-file', () => jest.fn((): ReplaceResult[] => ([
-  {file: 'test1', hasChanged: true},
-  {file: 'test2', hasChanged: false},
-])));
+jest.mock('replace-in-file', () => ({
+  replaceInFile: jest.fn((): ReplaceResult[] => ([
+    {file: 'test1', hasChanged: true},
+    {file: 'test2', hasChanged: false},
+  ])),
+}));
 
 const rootDir        = path.resolve(__dirname, '../..');
 const fixtureRootDir = path.resolve(__dirname, '../fixtures');
@@ -51,15 +52,11 @@ describe('updatePackageVersion', () => {
 
   it('should return processed file names', async() => {
     process.env.GITHUB_WORKSPACE = path.join(fixtureRootDir, 'plugin1');
-    const spy                    = jest.spyOn(replace, 'default').mockImplementation(() => [{file: 'file', hasChanged: true}]);
 
     expect(await updatePackageVersion(logger, getContext({
       eventName: 'push',
       ref: 'refs/tags/v0.0.2',
-    }))).toEqual(['file', 'file', 'file']);
-
-    spy.mockReset();
-    spy.mockRestore();
+    }))).toEqual(['test1', 'test1', 'test1']);
   });
 });
 
