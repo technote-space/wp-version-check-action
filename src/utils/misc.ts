@@ -1,9 +1,9 @@
-import { readdirSync, readFileSync } from 'fs';
-import { join } from 'path';
-import { Context } from '@actions/github/lib/context';
-import { getInput } from '@actions/core' ;
-import { Utils, ContextHelper } from '@technote-space/github-action-helper';
-import { ReplaceResult } from 'replace-in-file';
+import {readdirSync, readFileSync} from 'fs';
+import {join} from 'path';
+import {Context} from '@actions/github/lib/context';
+import {getInput} from '@actions/core' ;
+import {Utils, ContextHelper} from '@technote-space/github-action-helper';
+import {ReplaceResult} from 'replace-in-file';
 
 const {isSemanticVersioningTagName, getBoolValue, getPrefixRegExp} = Utils;
 
@@ -40,28 +40,28 @@ export const getDefaultBranch = (context: Context): string | undefined => contex
 export const getBranch = (context: Context): string => ContextHelper.isPr(context) ? Utils.getPrBranch(context) : Utils.getBranch(context);
 
 export const getNextVersion = (): string => {
-	const version = getInput('NEXT_VERSION');
-	if (isValidTagName(version)) {
-		return version;
-	}
+  const version = getInput('NEXT_VERSION');
+  if (isValidTagName(version)) {
+    return version;
+  }
 
-	return '';
+  return '';
 };
 
 export const isSpecifiedNextVersion = (): boolean => !!getNextVersion();
 
 export const getTagName = (context: Context): string => {
-	const nextVersion = getNextVersion();
-	if (nextVersion) {
-		return nextVersion;
-	}
+  const nextVersion = getNextVersion();
+  if (nextVersion) {
+    return nextVersion;
+  }
 
-	const tagName = ContextHelper.getTagName(context);
-	if (tagName) {
-		return tagName;
-	}
+  const tagName = ContextHelper.getTagName(context);
+  if (tagName) {
+    return tagName;
+  }
 
-	return getVersionFromBranch(getBranch(context));
+  return getVersionFromBranch(getBranch(context));
 };
 
 export const isValidTagNameContext = (context: Context): boolean => isValidTagName(ContextHelper.getTagName(context));
@@ -71,13 +71,13 @@ export const isValidBranchContext = (context: Context): boolean => isValidBranch
 export const isValidContext = (context: Context): boolean => isSpecifiedNextVersion() || isValidTagNameContext(context) || isValidBranchContext(context);
 
 export const findAutoloadFile = (workDir: string): string | never => {
-	const result = readdirSync(workDir, {withFileTypes: true})
-		.filter(dirent => dirent.isFile() && /\.php$/.test(dirent.name))
-		.map(({name}) => join(workDir, name))
-		.find(path => /Version\s*:\s*v?\d+(\.\d+)*$/m.test(readFileSync(path, {encoding: 'utf-8'})));
-	if (!result) {
-		throw new Error('Autoload file not found.');
-	}
+  const result = readdirSync(workDir, {withFileTypes: true})
+    .filter(dirent => dirent.isFile() && /\.php$/.test(dirent.name))
+    .map(({name}) => join(workDir, name))
+    .find(path => /Version\s*:\s*v?\d+(\.\d+)*$/m.test(readFileSync(path, {encoding: 'utf-8'})));
+  if (!result) {
+    throw new Error('Autoload file not found.');
+  }
 
-	return result.replace(getPrefixRegExp(workDir), '').replace(/^\//, '');
+  return result.replace(getPrefixRegExp(workDir), '').replace(/^\//, '');
 };
