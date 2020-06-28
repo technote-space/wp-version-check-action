@@ -257,7 +257,7 @@ describe('commit', () => {
       '::endgroup::',
       '::group::Creating commit... [cd8274d15fa3ae2ab983129fb037999f264ba9a7]',
       '::endgroup::',
-      '::group::Updating ref... [heads%252Fmaster] [7638417db6d59f3c431d3e1f261cc637155684cd]',
+      '::group::Updating ref... [heads/master] [7638417db6d59f3c431d3e1f261cc637155684cd]',
       '::set-env name=GITHUB_SHA::7638417db6d59f3c431d3e1f261cc637155684cd',
       '::endgroup::',
       '::set-output name=sha::7638417db6d59f3c431d3e1f261cc637155684cd',
