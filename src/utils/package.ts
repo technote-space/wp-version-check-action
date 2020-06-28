@@ -1,7 +1,7 @@
 import {existsSync} from 'fs';
 import {setOutput} from '@actions/core';
 import {Context} from '@actions/github/lib/context';
-import {Octokit} from '@octokit/rest';
+import {Octokit} from '@technote-space/github-action-helper/dist/types';
 import {Utils, ApiHelper, Logger, ContextHelper} from '@technote-space/github-action-helper';
 import {ReplaceResult, replaceInFile} from 'replace-in-file';
 import {
