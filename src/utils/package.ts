@@ -2,7 +2,8 @@ import {existsSync} from 'fs';
 import {setOutput} from '@actions/core';
 import {Context} from '@actions/github/lib/context';
 import {Octokit} from '@technote-space/github-action-helper/dist/types';
-import {Utils, ApiHelper, Logger, ContextHelper} from '@technote-space/github-action-helper';
+import {Utils, ApiHelper, ContextHelper} from '@technote-space/github-action-helper';
+import {Logger} from '@technote-space/github-action-log-helper';
 import {ReplaceResult, replaceInFile} from 'replace-in-file';
 import {
   getPackageVersionToUpdate,
@@ -73,7 +74,11 @@ export const commit = async(files: Array<string>, logger: Logger, octokit: Octok
     return false;
   }
 
-  const helper = new ApiHelper(octokit, context, logger, {branch: branch, refForUpdate: `heads/${branch}`, suppressBPError: true});
+  const helper = new ApiHelper(octokit, context, logger, {
+    branch: branch,
+    refForUpdate: `heads/${branch}`,
+    suppressBPError: true,
+  });
   await helper.commit(Utils.getWorkspace(), getCommitMessage(), files);
   setOutput('sha', process.env.GITHUB_SHA + '');
   return true;
