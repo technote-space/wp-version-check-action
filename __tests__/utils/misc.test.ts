@@ -2,6 +2,7 @@
 import path from 'path';
 import {isTargetEvent} from '@technote-space/filter-github-action';
 import {generateContext, testEnv} from '@technote-space/github-action-test-helper';
+import {Logger} from '@technote-space/github-action-log-helper';
 import {
   isTestTag,
   getTestTag,
@@ -15,6 +16,7 @@ import {
 import {TARGET_EVENTS} from '../../src/constant';
 
 const rootDir        = path.resolve(__dirname, '../..');
+const logger         = new Logger();
 const fixtureRootDir = path.resolve(__dirname, '../fixtures');
 
 describe('isTargetEvent', () => {
@@ -256,6 +258,7 @@ describe('isValidTagName', () => {
   it('should return true 1', () => {
     expect(isValidTagName('1.2.3')).toBe(true);
     expect(isValidTagName('v1.2.3')).toBe(true);
+    expect(isValidTagName('v1.0-beta+exp.sha.5114f85')).toBe(true);
   });
 
   it('should return true 2', () => {
@@ -298,7 +301,7 @@ describe('getPackageVersionToUpdate', () => {
 
 describe('getReplaceResultMessages', () => {
   it('should return empty', () => {
-    expect(getReplaceResultMessages([])).toEqual([]);
+    expect(getReplaceResultMessages([], logger)).toEqual([]);
   });
 
   it('should get messages', () => {
@@ -311,7 +314,7 @@ describe('getReplaceResultMessages', () => {
         file: 'test2',
         hasChanged: false,
       },
-    ]);
+    ], logger);
 
     expect(messages).toHaveLength(2);
     expect(messages[0]).toContain('test1');

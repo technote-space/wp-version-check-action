@@ -1,13 +1,14 @@
 import {readdirSync, readFileSync} from 'fs';
 import {join} from 'path';
 import {Context} from '@actions/github/lib/context';
-import {getInput} from '@actions/core' ;
+import {getInput} from '@actions/core';
 import {Utils, ContextHelper} from '@technote-space/github-action-helper';
+import {Logger} from '@technote-space/github-action-log-helper';
 import {ReplaceResult} from 'replace-in-file';
 
-const {isSemanticVersioningTagName, getBoolValue, getPrefixRegExp} = Utils;
+const {isValidSemanticVersioning, getBoolValue, getPrefixRegExp} = Utils;
 
-const normalizeVersion = (version: string): string => version.replace(/^v/, '');
+const normalizeVersion = (version: string): string => Utils.normalizeVersion(version, {fill: false, cut: false}) ?? '';
 
 export const getBranchPrefix = (): string => getInput('BRANCH_PREFIX');
 
@@ -15,7 +16,7 @@ const getBranchPrefixRegExp = (): RegExp => getPrefixRegExp(getBranchPrefix());
 
 const getVersionFromBranch = (branch: string): string => branch.replace(getBranchPrefixRegExp(), '');
 
-export const isValidBranch = (branch: string): boolean => !!getBranchPrefix() && getBranchPrefixRegExp().test(branch) && isSemanticVersioningTagName(getVersionFromBranch(branch));
+export const isValidBranch = (branch: string): boolean => !!getBranchPrefix() && getBranchPrefixRegExp().test(branch) && isValidSemanticVersioning(getVersionFromBranch(branch));
 
 export const getTestTagPrefix = (): string => getInput('TEST_TAG_PREFIX');
 
@@ -27,9 +28,9 @@ export const getTestTag = (tagName: string): string => tagName.replace(getTestTa
 
 export const getPackageVersionToUpdate = (tagName: string): string => normalizeVersion(isTestTag(tagName) ? getTestTag(tagName) : tagName);
 
-export const isValidTagName = (tagName: string): boolean => isSemanticVersioningTagName(getPackageVersionToUpdate(tagName));
+export const isValidTagName = (tagName: string): boolean => isValidSemanticVersioning(getPackageVersionToUpdate(tagName));
 
-export const getReplaceResultMessages = (results: ReplaceResult[]): string[] => results.map(result => `${result.hasChanged ? '✔' : '✖'} ${result.file}`);
+export const getReplaceResultMessages = (results: ReplaceResult[], logger: Logger): string[] => results.map(result => `${result.hasChanged ? logger.c('✔', {color: 'green'}) : logger.c('✖', {color: 'red'})} ${result.file}`);
 
 export const getCommitMessage = (): string => getInput('COMMIT_MESSAGE', {required: true});
 

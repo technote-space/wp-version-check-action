@@ -1,7 +1,7 @@
 /* eslint-disable no-magic-numbers */
 import nock from 'nock';
 import path from 'path';
-import {ReplaceResult} from 'replace-in-file';
+import {replaceInFile} from 'replace-in-file';
 import {Logger} from '@technote-space/github-action-log-helper';
 import {
   getContext,
@@ -22,12 +22,8 @@ import {
   commit,
 } from '../../src/utils/package';
 
-jest.mock('replace-in-file', () => ({
-  replaceInFile: jest.fn((): ReplaceResult[] => ([
-    {file: 'test1', hasChanged: true},
-    {file: 'test2', hasChanged: false},
-  ])),
-}));
+jest.mock('replace-in-file');
+const replaceInFileMock = replaceInFile as jest.Mock;
 
 const rootDir        = path.resolve(__dirname, '../..');
 const fixtureRootDir = path.resolve(__dirname, '../fixtures');
@@ -54,11 +50,64 @@ describe('updatePackageVersion', () => {
 
   it('should return processed file names', async() => {
     process.env.GITHUB_WORKSPACE = path.join(fixtureRootDir, 'plugin1');
+    const mockStdout             = spyOnStdout();
+
+    const fn = jest.fn(() => ([
+      {file: 'test1', hasChanged: true},
+      {file: 'test2', hasChanged: false},
+    ]));
+    replaceInFileMock.mockImplementation(fn);
 
     expect(await updatePackageVersion(logger, getContext({
       eventName: 'push',
-      ref: 'refs/tags/v0.0.2',
+      ref: 'refs/tags/v1.0-beta+exp.sha.5114f85',
     }))).toEqual(['test1', 'test1', 'test1', 'test1']);
+
+    stdoutCalledWith(mockStdout, [
+      '::group::Updating package version...',
+      '  >> \x1b[32;40m✔\x1b[0m test1',
+      '  >> \x1b[31;40m✖\x1b[0m test2',
+      '  >> \x1b[32;40m✔\x1b[0m test1',
+      '  >> \x1b[31;40m✖\x1b[0m test2',
+      '  >> \x1b[32;40m✔\x1b[0m test1',
+      '  >> \x1b[31;40m✖\x1b[0m test2',
+      '  >> \x1b[32;40m✔\x1b[0m test1',
+      '  >> \x1b[31;40m✖\x1b[0m test2',
+    ]);
+
+    expect(fn).toBeCalledTimes(4);
+    expect(fn).toHaveBeenNthCalledWith(1,
+      {
+        'file': 'readme.txt',
+        'files': 'readme.txt',
+        'from': /^Stable tag\s*:\s*v?\d+(\.\d+)*$/m,
+        'to': 'Stable tag: 1.0-beta+exp.sha.5114f85',
+      },
+    );
+    expect(fn).toHaveBeenNthCalledWith(2,
+      {
+        'file': 'update.json',
+        'files': 'update.json',
+        'from': /"version"\s*:\s*"v?\d+(\.\d+)*"\s*(,?)$/m,
+        'to': '"version": "1.0-beta+exp.sha.5114f85"$2',
+      },
+    );
+    expect(fn).toHaveBeenNthCalledWith(3,
+      {
+        'file': 'autoload.php',
+        'files': 'autoload.php',
+        'from': /Version\s*:\s*v?\d+(\.\d+)*$/m,
+        'to': 'Version: 1.0-beta+exp.sha.5114f85',
+      },
+    );
+    expect(fn).toHaveBeenNthCalledWith(4,
+      {
+        'file': 'assets/js/package.json',
+        'files': 'assets/js/package.json',
+        'from': /"version"\s*:\s*"v?\d+(\.\d+)*"\s*(,?)$/m,
+        'to': '"version": "1.0-beta+exp.sha.5114f85"$2',
+      },
+    );
   });
 });
 
@@ -145,7 +194,7 @@ describe('commit', () => {
     }))).toBe(true);
 
     stdoutCalledWith(mockStdout, [
-      '> No update required.',
+      '> No need to update.',
     ]);
   });
 
