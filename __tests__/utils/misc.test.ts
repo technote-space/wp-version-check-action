@@ -16,7 +16,7 @@ import {
 import {TARGET_EVENTS} from '../../src/constant';
 
 const rootDir        = path.resolve(__dirname, '../..');
-const logger  = new Logger();
+const logger         = new Logger();
 const fixtureRootDir = path.resolve(__dirname, '../fixtures');
 
 describe('isTargetEvent', () => {
