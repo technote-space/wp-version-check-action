@@ -33,7 +33,7 @@ export const updatePackageVersion = async(logger: Logger, context: Context): Pro
     return acc.concat(await replaceInFile({...config, files: config.file}));
   }, Promise.resolve([] as Array<ReplaceResult>));
 
-  logger.displayStdout(getReplaceResultMessages(results));
+  logger.displayStdout(getReplaceResultMessages(results, logger));
 
   return results.filter(item => item.hasChanged).map(item => item.file);
 };
@@ -59,7 +59,7 @@ export const getUpdateBranch = async(logger: Logger, context: Context): Promise<
 
 export const commit = async(files: Array<string>, logger: Logger, octokit: Octokit, context: Context): Promise<boolean> => {
   if (!files.length) {
-    logger.info('No update required.');
+    logger.info('No need to update.');
     return true;
   }
 

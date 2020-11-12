@@ -145,7 +145,7 @@ describe('commit', () => {
     }))).toBe(true);
 
     stdoutCalledWith(mockStdout, [
-      '> No update required.',
+      '> No need to update.',
     ]);
   });
 
