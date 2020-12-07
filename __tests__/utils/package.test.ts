@@ -75,8 +75,8 @@ describe('updatePackageVersion', () => {
       '  >> \x1b[31;40m✖\x1b[0m test2',
     ]);
 
-    expect(fn).toBeCalledTimes(4);
-    expect(fn).toHaveBeenNthCalledWith(1,
+    expect(replaceInFileMock).toBeCalledTimes(4);
+    expect(replaceInFileMock).toHaveBeenNthCalledWith(1,
       {
         'file': 'readme.txt',
         'files': 'readme.txt',
@@ -84,7 +84,7 @@ describe('updatePackageVersion', () => {
         'to': 'Stable tag: 1.0-beta+exp.sha.5114f85',
       },
     );
-    expect(fn).toHaveBeenNthCalledWith(2,
+    expect(replaceInFileMock).toHaveBeenNthCalledWith(2,
       {
         'file': 'update.json',
         'files': 'update.json',
@@ -92,7 +92,7 @@ describe('updatePackageVersion', () => {
         'to': '"version": "1.0-beta+exp.sha.5114f85"$2',
       },
     );
-    expect(fn).toHaveBeenNthCalledWith(3,
+    expect(replaceInFileMock).toHaveBeenNthCalledWith(3,
       {
         'file': 'autoload.php',
         'files': 'autoload.php',
@@ -100,7 +100,7 @@ describe('updatePackageVersion', () => {
         'to': 'Version: 1.0-beta+exp.sha.5114f85',
       },
     );
-    expect(fn).toHaveBeenNthCalledWith(4,
+    expect(replaceInFileMock).toHaveBeenNthCalledWith(4,
       {
         'file': 'assets/js/package.json',
         'files': 'assets/js/package.json',
