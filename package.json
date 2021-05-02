@@ -1,6 +1,6 @@
 {
   "name": "@technote-space/wp-version-check-action",
-  "version": "1.6.7",
+  "version": "1.6.8",
   "description": "GitHub Action to check versions of wp plugin files before publish.",
   "keywords": [
     "github",
