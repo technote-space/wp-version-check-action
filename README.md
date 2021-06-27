@@ -23,7 +23,6 @@ This is a `GitHub Actions` to check versions of wp plugin files before publish.
 - [Options](#options)
 - [Action event details](#action-event-details)
   - [Target events](#target-events)
-  - [Conditions](#conditions)
 - [Author](#author)
 
 </details>
