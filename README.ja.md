@@ -1,9 +1,9 @@
 # WP Version Check Action
 
 [![CI Status](https://github.com/technote-space/wp-version-check-action/workflows/CI/badge.svg)](https://github.com/technote-space/wp-version-check-action/actions)
-[![codecov](https://codecov.io/gh/technote-space/wp-version-check-action/branch/master/graph/badge.svg)](https://codecov.io/gh/technote-space/wp-version-check-action)
+[![codecov](https://codecov.io/gh/technote-space/wp-version-check-action/branch/main/graph/badge.svg)](https://codecov.io/gh/technote-space/wp-version-check-action)
 [![CodeFactor](https://www.codefactor.io/repository/github/technote-space/wp-version-check-action/badge)](https://www.codefactor.io/repository/github/technote-space/wp-version-check-action)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/technote-space/wp-version-check-action/blob/master/LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/technote-space/wp-version-check-action/blob/main/LICENSE)
 
 *Read this in other languages: [English](README.md), [日本語](README.ja.md).*
 
@@ -62,8 +62,11 @@
        name: Publish Package
        runs-on: ubuntu-latest
        steps:
-         - name: Checkout
-           uses: actions/checkout@v2
+         - uses: actions/checkout@v2
+         - uses: actions/setup-node@v2
+           with:
+             node-version: '12.x'
+             registry-url: 'https://registry.npmjs.org'
 
          # Use this GitHub Action
          - name: Check version
@@ -71,16 +74,11 @@
            with:
              COMMIT_DISABLED: 1
 
-         - name: Install Package dependencies
-           run: yarn install
-         - name: Build
-           run: yarn build
-         - name: Publish
-           uses: actions/npm@master
+         - run: npm install
+         - run: npm run build
+         - run: npm publish
            env:
-             NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
-           with:
-             args: publish
+             NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
    ```
 [対象イベントの詳細](#action-%E3%82%A4%E3%83%99%E3%83%B3%E3%83%88%E8%A9%B3%E7%B4%B0)
 
@@ -111,6 +109,7 @@
 |release: rerequested|[condition1](#condition1)|
 |pull_request: opened, reopened, synchronize|[condition2](#condition2)|
 |created: *|[condition3](#condition3)|
+
 ### Conditions
 #### condition1
 - tags
