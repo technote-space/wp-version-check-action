@@ -62,8 +62,11 @@ This is a `GitHub Actions` to check versions of wp plugin files before publish.
        name: Publish Package
        runs-on: ubuntu-latest
        steps:
-         - name: Checkout
-           uses: actions/checkout@v2
+         - uses: actions/checkout@v2
+         - uses: actions/setup-node@v2
+           with:
+             node-version: '12.x'
+             registry-url: 'https://registry.npmjs.org'
 
          # Use this GitHub Action
          - name: Check version
@@ -71,16 +74,11 @@ This is a `GitHub Actions` to check versions of wp plugin files before publish.
            with:
              COMMIT_DISABLED: 1
 
-         - name: Install Package dependencies
-           run: yarn install
-         - name: Build
-           run: yarn build
-         - name: Publish
-           uses: actions/npm@master
+         - run: npm install
+         - run: npm run build
+         - run: npm publish
            env:
-             NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
-           with:
-             args: publish
+             NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
    ```
 [More details of target event](#action-event-details)
 
@@ -111,6 +109,7 @@ This is a `GitHub Actions` to check versions of wp plugin files before publish.
 |release: rerequested|[condition1](#condition1)|
 |pull_request: opened, reopened, synchronize|[condition2](#condition2)|
 |created: *|[condition3](#condition3)|
+
 ### Conditions
 #### condition1
 - tags
